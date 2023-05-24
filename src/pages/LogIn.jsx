@@ -11,7 +11,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import GoogleButton from "react-google-button";
 import { useNavigate } from "react-router-dom";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { auth, provider } from "../firebase.utils";
 
 function Copyright(props) {
@@ -53,6 +53,16 @@ export default function SignInSide() {
           `Error, authentication failed. Error details collected:: ${errorCode}:: ${errorMessage}:: ${userErrorEmail}:: ${userErrorCredentials}`
         );
       });
+  };
+
+  const logOut = () => {
+    try {
+      signOut(auth);
+      console.log("successfull logout");
+      navigate("/home");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -106,6 +116,17 @@ export default function SignInSide() {
                 marginBottom: 25,
               }}
             />
+            <Button
+              style={{
+                marginBottom: 10,
+                fontSize: 15,
+                fontWeight: "bold",
+                cursor: "pointer",
+              }}
+              onClick={logOut}
+            >
+              sign out
+            </Button>
             <hr />
 
             <Copyright sx={{ mt: 5 }} />
