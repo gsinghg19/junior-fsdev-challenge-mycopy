@@ -11,7 +11,6 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import GoogleButton from "react-google-button";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../firebase.utils";
 
@@ -34,13 +33,26 @@ function Copyright(props) {
 }
 
 export default function SignInSide() {
-  //   const [userLogin, setUserLogin] = useState("");
   const navigate = useNavigate();
 
   const signIn = () => {
-    // signInWithPopup(auth, provider);
-
-    navigate("/home");
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        const user = result.user;
+        navigate("/home");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const userErrorEmail = error.customData.email;
+        const userErrorCredentials =
+          GoogleAuthProvider.credentialFromError(error);
+        console.log(
+          `Error, authentication failed. Error details collected:: ${errorCode}:: ${errorMessage}:: ${userErrorEmail}:: ${userErrorCredentials}`
+        );
+      });
   };
 
   return (
