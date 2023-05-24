@@ -39,8 +39,10 @@ export default function SignInSide() {
     signInWithPopup(auth, provider)
       .then((result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        const user = result.user;
+        const accessToken = credential.accessToken;
+        const user = result.user.displayName;
+        console.log("The user is: ", user);
+
         navigate("/home");
       })
       .catch((error) => {
