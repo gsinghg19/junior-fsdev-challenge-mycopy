@@ -3,6 +3,13 @@ import Header from "../components/Header";
 import SignInSide from "../pages/LogIn";
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
+import {
+  signInWithPopup,
+  signOut,
+  GoogleAuthProvider,
+  signInWithCredential,
+} from "firebase/auth";
+import { auth, provider } from "../firebase.utils";
 
 describe("header", () => {
   test("Detect darkmodeswitch has rendered with app bar", async () => {
@@ -18,6 +25,7 @@ describe("header", () => {
     expect(avatarBox).toHaveStyle("backgroundColor: rgb(117 117 117 )");
   });
 });
+
 describe("Login", () => {
   test("Detect the login page", async () => {
     render(
@@ -38,4 +46,14 @@ describe("Login", () => {
     );
     expect(screen.getByRole("button", { name: /Sign in with Google/i }));
   });
+  test("SigninWithPopUp via google auth single sign in should throw an error with wrong credentials", async () => {
+    let error = "";
+    try {
+      await signInWithPopup("incorrect_auth", "incorrect_provider");
+    } catch (e) {
+      error = e.toString();
+    }
+    expect(error).toContain("Error");
+  });
+  test("SigninWithPopUp via google auth single sign in should login in with correct credentials", async () => {});
 });
