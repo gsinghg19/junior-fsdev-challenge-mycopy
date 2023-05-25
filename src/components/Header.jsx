@@ -168,7 +168,7 @@ export default function MenuAppBar({ change, check }) {
                       </ListItem>
                     </Link>
 
-                    {!googleAuthPersistance ? (
+                    {!user ? (
                       <Link href="/login" underline="none">
                         <ListItem disablePadding>
                           <ListItemButton>
