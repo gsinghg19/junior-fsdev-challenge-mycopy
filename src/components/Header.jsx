@@ -174,6 +174,7 @@ export default function MenuAppBar({ change, check }) {
                             </ListItemButton>
                           </ListItem>
                         </Link>
+                        <Divider sx={{ mb: 3 }} />
                         <div>
                           <p>{user?.displayName}</p>
                         </div>
