@@ -7,7 +7,6 @@ import {
 } from "firebase/auth";
 import { auth } from "../firebase.utils";
 import { useNavigate } from "react-router-dom";
-import { TryTwoTone } from "@mui/icons-material";
 
 const AuthContext = createContext();
 
