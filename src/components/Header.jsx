@@ -22,28 +22,11 @@ import HomeIcon from "@mui/icons-material/Home";
 import CloudIcon from "@mui/icons-material/Cloud";
 import { Switch } from "@mui/material";
 import Brightness6Icon from "@mui/icons-material/Brightness6";
-import {
-  setPersistence,
-  browserSessionPersistence,
-  signInWithPopup,
-} from "firebase/auth";
-import { auth, provider } from "../firebase.utils";
 import { UserAuth } from "../context/AuthContext";
 
 export default function MenuAppBar({ change, check }) {
   const [open, setState] = useState(false);
   const { logOut, user } = UserAuth();
-
-  const googleAuthPersistance = () => {
-    setPersistence(auth, browserSessionPersistence)
-      .then(() => {
-        return signInWithPopup(auth, provider);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-      });
-  };
 
   const LogOut = async () => {
     try {
