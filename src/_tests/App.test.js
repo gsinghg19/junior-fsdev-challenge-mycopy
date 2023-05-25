@@ -1,7 +1,7 @@
 import userEvent from "@testing-library/user-event";
 import Header from "../components/Header";
 import SignInSide from "../pages/LogIn";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import {
   signInWithPopup,
@@ -55,5 +55,23 @@ describe("Login", () => {
     }
     expect(error).toContain("Error");
   });
-  test("SigninWithPopUp via google auth single sign in should login in with correct credentials", async () => {});
+  test("SigninWithPopUp via google auth single sign in should create a popup modal, with an email text box", async () => {
+    const user = userEvent.setup();
+    render(
+      <BrowserRouter>
+        <SignInSide />
+      </BrowserRouter>
+    );
+    await user.click(
+      screen.getByRole("button", { name: /Sign in with Google/i })
+    );
+    expect(screen.getByRole("button", { name: /Sign in with Google/i }));
+
+    await waitFor(() =>
+      screen.getByRole("button", { name: /Next/i }, { hidden: true })
+    );
+
+    // await waitFor(() => screen.getByRole("presentation", { hidden: true }));
+    // expect(screen.getByRole("presentation"));
+  });
 });

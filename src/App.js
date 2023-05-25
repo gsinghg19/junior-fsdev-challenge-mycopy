@@ -9,6 +9,7 @@ import { Gcs } from "./pages/GCS";
 import "./App.css";
 import { useState } from "react";
 import { ThemeProvider, createTheme } from "@mui/material";
+import { AuthContextProvider } from "./context/AuthContext";
 
 export default function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -21,19 +22,21 @@ export default function App() {
 
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <div>
-          <Header check={darkMode} change={() => setDarkMode(!darkMode)} />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/drive" element={<Drive />} />
-            <Route path="/gcs" element={<Gcs />} />
-            <Route path="/login" element={<SignInSide />} />
-          </Routes>
-        </div>
-      </ThemeProvider>
+      <AuthContextProvider>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <div>
+            <Header check={darkMode} change={() => setDarkMode(!darkMode)} />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/drive" element={<Drive />} />
+              <Route path="/gcs" element={<Gcs />} />
+              <Route path="/login" element={<SignInSide />} />
+            </Routes>
+          </div>
+        </ThemeProvider>
+      </AuthContextProvider>
     </>
   );
 }

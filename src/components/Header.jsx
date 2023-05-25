@@ -22,9 +22,37 @@ import HomeIcon from "@mui/icons-material/Home";
 import CloudIcon from "@mui/icons-material/Cloud";
 import { Switch } from "@mui/material";
 import Brightness6Icon from "@mui/icons-material/Brightness6";
+import {
+  setPersistence,
+  browserSessionPersistence,
+  signInWithPopup,
+} from "firebase/auth";
+import { auth, provider } from "../firebase.utils";
+import { UserAuth } from "../context/AuthContext";
 
 export default function MenuAppBar({ change, check }) {
   const [open, setState] = useState(false);
+  const { logOut, user } = UserAuth();
+
+  const googleAuthPersistance = () => {
+    setPersistence(auth, browserSessionPersistence)
+      .then(() => {
+        return signInWithPopup(auth, provider);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
+  };
+
+  const LogOut = async () => {
+    try {
+      await logOut();
+      console.log("successfull logout");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const toggleDrawer = (open) => (event) => {
     if (
@@ -139,16 +167,35 @@ export default function MenuAppBar({ change, check }) {
                         </ListItemButton>
                       </ListItem>
                     </Link>
-                    <Link href="/login" underline="none">
-                      <ListItem disablePadding>
-                        <ListItemButton>
-                          <ListItemIcon>
-                            <LoginIcon />
-                          </ListItemIcon>
-                          <ListItemText primary={"Log In Screen"} />
-                        </ListItemButton>
-                      </ListItem>
-                    </Link>
+
+                    {!googleAuthPersistance ? (
+                      <Link href="/login" underline="none">
+                        <ListItem disablePadding>
+                          <ListItemButton>
+                            <ListItemIcon>
+                              <LoginIcon />
+                            </ListItemIcon>
+                            <ListItemText primary={"Log In Screen"} />
+                          </ListItemButton>
+                        </ListItem>
+                      </Link>
+                    ) : (
+                      <>
+                        <Link href="/login" underline="none" onClick={LogOut}>
+                          <ListItem disablePadding>
+                            <ListItemButton>
+                              <ListItemIcon>
+                                <LoginIcon />
+                              </ListItemIcon>
+                              <ListItemText primary={"Sign Out"} />
+                            </ListItemButton>
+                          </ListItem>
+                        </Link>
+                        <div>
+                          <p>{user?.displayName}</p>
+                        </div>
+                      </>
+                    )}
                   </List>
                 </Box>
               </Box>

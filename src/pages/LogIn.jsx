@@ -1,6 +1,5 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
@@ -10,9 +9,7 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import GoogleButton from "react-google-button";
-import { useNavigate } from "react-router-dom";
-import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
-import { auth, provider } from "../firebase.utils";
+import { UserAuth } from "../context/AuthContext";
 
 function Copyright(props) {
   return (
@@ -33,35 +30,11 @@ function Copyright(props) {
 }
 
 export default function SignInSide() {
-  const navigate = useNavigate();
+  const { googleSignIn } = UserAuth();
 
-  const signIn = () => {
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const accessToken = credential.accessToken;
-        const user = result.user.displayName;
-        console.log("The user is: ", user);
-
-        navigate("/home");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        const userErrorEmail = error.customData.email;
-        const userErrorCredentials =
-          GoogleAuthProvider.credentialFromError(error);
-        console.log(
-          `Error, authentication failed. Error details collected:: ${errorCode}:: ${errorMessage}:: ${userErrorEmail}:: ${userErrorCredentials}`
-        );
-      });
-  };
-
-  const logOut = () => {
+  const handleGoogleSignIn = async () => {
     try {
-      signOut(auth);
-      console.log("successfull logout");
-      navigate("/home");
+      await googleSignIn();
     } catch (error) {
       console.log(error);
     }
@@ -112,23 +85,12 @@ export default function SignInSide() {
           >
             <GoogleButton
               type="dark"
-              onClick={signIn}
+              onClick={handleGoogleSignIn}
               style={{
                 width: "100%",
                 marginBottom: 25,
               }}
             />
-            <Button
-              style={{
-                marginBottom: 10,
-                fontSize: 15,
-                fontWeight: "bold",
-                cursor: "pointer",
-              }}
-              onClick={logOut}
-            >
-              sign out
-            </Button>
             <hr />
 
             <Copyright sx={{ mt: 5 }} />
