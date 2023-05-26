@@ -1,6 +1,6 @@
 ## Netpremacy tech test Junior fullstack dev role
 
-Backend task comleted: google auth login
+Backend task completed: google auth login
 Frontend task completed: dark/light mode switch
 
 # Dependencies used:
@@ -23,7 +23,7 @@ Frontend task completed: dark/light mode switch
 
 ### Set-up
 
-To run the app, install dependencies viathe command:
+To run the app, install dependencies via the command:
 
 ```
 npm install
@@ -39,7 +39,7 @@ To run the app:
 npm start
 ```
 
-To run the test:
+To run the tests:
 
 ```
 npm test
