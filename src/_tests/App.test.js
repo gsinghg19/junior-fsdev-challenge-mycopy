@@ -62,16 +62,7 @@ describe("Login", () => {
 
     expect(signInWithGoogleButton).toBeInTheDocument();
   });
-  test("SigninWithPopUp via google auth single sign in should throw an error with wrong credentials", async () => {
-    let error = "";
-    try {
-      await signInWithPopup("incorrect_auth", "incorrect_provider");
-    } catch (e) {
-      error = e.toString();
-    }
-    expect(error).toContain("Error");
-  });
-  test("SigninWithPopUp via google auth single sign in should create a popup modal, with an email text box", async () => {
+  test("Google Sign in button is clickable", async () => {
     render(
       <AuthContextProvider>
         <SignInSide />
@@ -82,14 +73,14 @@ describe("Login", () => {
     await userEvent.click(
       screen.getByRole("button", { name: /Sign in with Google/i })
     );
-
-    screen.debug(undefined, Infinity);
-
-    // await waitFor(() =>
-    //   screen.getByRole("button", { name: /Next/i }, { hidden: true })
-    // );
-
-    // await waitFor(() => screen.getByRole("presentation", { hidden: true }));
-    // expect(screen.getByRole("presentation"));
+  });
+  test("SigninWithPopUp via google auth single sign in should throw an error with wrong credentials", async () => {
+    let error = "";
+    try {
+      await signInWithPopup("incorrect_auth", "incorrect_provider");
+    } catch (e) {
+      error = e.toString();
+    }
+    expect(error).toContain("Error");
   });
 });
