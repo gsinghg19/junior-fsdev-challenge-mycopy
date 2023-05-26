@@ -1,5 +1,8 @@
 ## Netpremacy tech test Junior fullstack dev role
 
+Backend task comleted: google auth login
+Frontend task completed: dark/light mode switch
+
 # Dependencies used:
 
 - @emotion/react
