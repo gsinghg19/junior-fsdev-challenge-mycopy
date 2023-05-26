@@ -44,3 +44,5 @@ To run the test:
 ```
 npm test
 ```
+
+Link to my forked repo: https://github.com/gsinghg19/junior-fsdev-challenge-mycopy
