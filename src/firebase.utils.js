@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { GoogleAuthProvider, getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDEvlr8T6NdrvoVxHnAsdBoezhZKv3cZHs",
+  apiKey: process.env.REACT_APP_API_FIREBASE,
   authDomain: "netpremacy-tech-test.firebaseapp.com",
   projectId: "netpremacy-tech-test",
   storageBucket: "netpremacy-tech-test.appspot.com",
